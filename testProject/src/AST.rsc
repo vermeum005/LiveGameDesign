@@ -1,6 +1,5 @@
 module AST
 
-
 public data TYPE = natural() | string();    
 	  
 public alias PicoId = str;                  

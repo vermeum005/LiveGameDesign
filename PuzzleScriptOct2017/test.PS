@@ -1,0 +1,54 @@
+title "My Game"
+author "Stephen Lavelle"
+homepage "www.puzzlescript.net"
+
+OBJECTS
+
+Background 
+Green
+
+Target 
+Blue
+
+Wall 
+Red
+
+Player 
+Blue   
+
+Crate 
+Orange 
+
+Sprite 
+Yellow   
+
+Temp 
+Red   
+
+LEGEND
+
+R = Background
+F = Wall
+P = Player
+G = Crate
+H = Crate and Target
+O = Target
+T = Temp
+S = Sprite
+
+COLLISIONLAYERS
+
+Background.
+Target.
+Player, Wall, Crate.
+Temp, Sprite.
+
+RULES
+
+[ < Player | Crate ] -> [ < Player | < Crate ]
+
+[ >  Player | Crate ] -> [  >  Player | > Crate  ]     
+late [ Crate | Crate | Crate ] -> [ | | ]
+late [ Sprite | ... | Player ] -> [ Temp | ... | Sprite ]
+late [ Temp ] -> [ Player ]
+
