@@ -5,26 +5,54 @@ alias Sprite = str;
 alias Mp = str;
 alias Sym = str;
 
-public data CreatorData 
-	= title(ID title)
-	|author(ID author)
-	|homepage(ID homepage);
+data Program
+  = program
+  (
+    CreatorData creatordata, Objects objects, Legend legend, Layers layers
+  );
+  
+data CreatorData 
+	= creatordata(ID title, ID author, ID homepage)
+	;
 	
-public data ObjectData
-	= objectdata(ID name, list[ID] colors, Sprite sprite);
+data Objects
+	= objects(list[ObjectData] objects)
+	;
 	
-public data LegendData
+data ObjectData
+	= objectdata(ID name, Colors, Sprite)
+	;
+	
+data Colors
+	= colors(list[Color] color)
+	;
+data Color
+   = blue()
+   | orange()
+   | red()
+   | yellow()
+   | green()
+   | brown()
+   | gray()
+   | black()
+   ;
+
+data Legend
+	= legend(list[LegendData] legend);	
+data LegendData
 	= objectcluster(ID clustername, list[ID] objectnames)
 	| legendobject(Sym symbol, ID objectname);
-	
-public data LayerData
-	= layerinfo(list[list[ID] names] layers);
-	
-public data RuleData
-	= rule(ID rule);
 
-public data WinCondition
-	= wincondition(ID condition);
+data Layers
+	= layers(list[LayerData] layers);	
+data LayerData
+	= layerdata(list[ID] names);
 	
-public data LevelData
-	= mp(Mp mp);
+//public data RuleData
+//	= rule(ID rule);
+
+//public data WinCondition
+//	= wincondition(ID condition);
+	
+//public data LevelData
+//	= mp(Mp mp);

@@ -1,7 +1,7 @@
 module Syntax
 
 lexical Natural = [0-9]+ !>> [0-9] ;
-lexical ID = [a-zA-Z][a-z0-9.A-Z]* !>> [a-z0-9.A-Z];
+lexical ID = [a-zA-Z][a-z0-9.A-Z]+ !>> [a-z0-9.A-Z];
 lexical String = "\"" ![\"]*  "\"";
 lexical Sym = [a-zA-Z.!@#$%^&*];
 lexical Mp = Sym*;
@@ -12,20 +12,44 @@ syntax Sprite = Spriteline [\n] Spriteline [\n] Spriteline [\n] Spriteline [\n] 
 
 layout WhiteSpace = [\t-\n\ \r]* ;
 
-//start syntax CreatorData
-//	= title: "title " ID title
-//	| author: "author " ID author
-//	| homepage: "homepage " ID homepage;
+start syntax Program
+	= program: CreatorData Objects Legend Layers;
+
+start syntax CreatorData
+	= creatordata: "title " ID "author " ID "homepage " ID;
 
 
-//start syntax ObjectData 
-//	= objectdata: ID name  ID+ colors  Sprite sprite;
+syntax Objects
+	= objects: ObjectData+
+	;
 	
-//start syntax LegendData
-//	= objectcluster: ID clustername "=" {ID "or"}+
-//	| legendobject: Sym symbol "=" ID objectname;
+syntax ObjectData 
+	= objectdata: ID Colors Sprite;
+	
+syntax Colors
+	= colors: {Color WhiteSpace}+;
+	
+syntax Color
+   = blue: "blue"
+   | orange: "orange"
+   | red: "red"
+   | yellow: "yellow"
+   | green: "green"
+   | brown: "brown"
+   | gray: "gray"
+   | black: "black";
+	
+syntax Legend
+	= legend: LegendData+
+	;	
+syntax LegendData
+	= objectcluster: ID "=" {ID "or"}+
+	| legendobject: Sym "=" ID;
 
-//start syntax LayerData
-//	= layerdata: {ID ","}+;
+syntax Layers
+	= layers: {LayerData "\r"}+
+	;
+syntax LayerData
+	= layerdata: {ID ","}+;
 
 

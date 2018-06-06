@@ -78,7 +78,7 @@ public void PS_register()
 
 public void testIt()
 {
-  loc file = |project://PuzzleScript/test2.PS|;
+  loc file = |project://PuzzleScriptOct2017/test2.PS|;
   
   Tree t = PS_parse(file);
   
