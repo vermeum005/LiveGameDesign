@@ -20,7 +20,7 @@ data Objects
 	;
 	
 data ObjectData
-	= objectdata(ID name, Colors, Sprite)
+	= objectdata(ID name, Colors colors, Sprite)
 	;
 	
 data Colors
@@ -48,8 +48,40 @@ data Layers
 data LayerData
 	= layerdata(list[ID] names);
 	
-//public data RuleData
-//	= rule(ID rule);
+data RuleData
+	= ruledata(list[Rule] rules);
+	
+data Rule
+	= rule(PreCondition precondition, Conditions conditions, Effects effects);
+
+data Effects
+	= effects(list[Effect] effects);
+
+data Effect
+	= modeffect(Mod modifier, ID object)
+	| effect(ID object)
+	| emptyeffect();	
+	
+data Conditions
+	= conditions(list[Condition] conditions);
+	
+data Condition
+	= modcondition(Mod modifier, ID object)
+	| condition(ID object)
+	| emptycondition();
+	
+data Mod
+	= away()
+	| towords()
+	| up()
+	| down()
+	;
+
+data PreCondition
+	= late()
+	| horizontal()
+	| vertical();
+	
 
 //public data WinCondition
 //	= wincondition(ID condition);
