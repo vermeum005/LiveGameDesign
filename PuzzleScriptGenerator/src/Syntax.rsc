@@ -1,30 +1,32 @@
 module Syntax
 
-lexical Natural = [0-9]+ !>> [0-9] ;
-lexical ID = [a-zA-Z][a-z0-9.A-Z]+ !>> [a-z0-9.A-Z];
-lexical String = "\"" ![\"]*  "\"";
-lexical Sym = [a-zA-Z.!@#$%&*];
-lexical Mp = Sym*;
+//lexical Natural = [0-9]+ !>> [0-9] ;
+lexical ID = [a-zA-Z][a-z0-9.A-Z]+ !>> [a-z0-9.A-Z] \ Keywords;
+//lexical String = "\"" ![\"]*  "\"" \ Keywords;
+//lexical Sym = [a-zA-Z.!@#$%&*];
+//lexical Mp = Sym* \ Keywords;
 
-syntax Spriteline = [0-9.][0-9.][0-9.][0-9.][0-9.];
-syntax Sprite = Spriteline [\n] Spriteline [\n] Spriteline [\n] Spriteline [\n] Spriteline;
+//lexical Spriteline = [0-9.][0-9.][0-9.][0-9.][0-9.];
+//syntax Sprite = Spriteline  Spriteline  Spriteline  Spriteline Spriteline;
 
 
 layout WhiteSpace = [\t-\n\ \r]* ;
 
 start syntax Program
-	= program: CreatorData Objects Legend Layers;
+	= program: "OBJECTS" ID* "LEGEND";
+	//Layer RuleData;
 
 syntax CreatorData
 	= creatordata: "title " ID "author " ID "homepage " ID;
 
 
 syntax Objects
-	= objects: ObjectData+
+	= objects: "OBJECTS" ObjectData*
 	;
 	
 syntax ObjectData 
-	= objectdata: ID Colors Sprite;
+	= objectdata: ID
+	;
 	
 syntax Colors
 	= colors: {Color WhiteSpace}+;
@@ -40,23 +42,23 @@ syntax Color
    | black: "black";
 	
 syntax Legend
-	= legend: LegendData+
+	= legend: "LEGEND"
 	;	
 syntax LegendData
 	= objectcluster: ID "=" {ID "or"}+
 	| legendobject: Sym "=" ID;
 
 syntax Layers
-	= layers: {LayerData "\r"}+
+	= layers: "COLLISIONLAYERS" {LayerData "\n"}*
 	;
 syntax LayerData
 	= layerdata: {ID ","}+;
 	// empty slots in effects dont work yet. Applies to teleporting
 syntax RuleData
-	= ruledata: {Rule "\r"}*;
+	= ruledata: "RULES" {Rule "\n"}*;
 	
 syntax Rule
-	= rule:	"RULES" PreCondition? Conditions "-\>" Effects;
+	= rule: PreCondition? (Conditions "-\>" Effects);
 	
 syntax Conditions
 	= conditions: "[" {Condition "|"}+ "]";
@@ -85,6 +87,10 @@ syntax Mod
 	| up: "^"
 	| down: "v"
 	;
+
+keyword Keywords
+	= "RULES" | "OBJECTS" | "LEGEND" | "COLLISIONLAYERS" 
+	| "WINCONDITIONS" | "LEVELS" | "title" | "author" | "homepage" ;
 
 //syntax Effect
 //	= effect: "[" {((Mod ID) | "..." | "") "|"}* "]";
