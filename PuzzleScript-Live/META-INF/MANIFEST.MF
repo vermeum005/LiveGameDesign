@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: PuzzleScript_Live
+Bundle-SymbolicName: PuzzleScript_Live
+Bundle-Version: 1.0.0
+Require-Bundle: rascal_eclipse
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

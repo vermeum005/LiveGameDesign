@@ -1,14 +1,15 @@
 module AST
 
-alias ID = str;
 alias Sprite = str;
 alias Mp = str;
 alias Sym = str;
 
+data ID = id(str name);
+
 data Program
   = program
   (
-    CreatorData creatordata, Objects objects, Legend legend, Layers layers
+    CreatorData creatordata, Objects objects, Legend legend, Layers layers, RuleData ruledata, WinCondition wincondition, Levels levels
   );
   
 data CreatorData 
@@ -20,7 +21,7 @@ data Objects
 	;
 	
 data ObjectData
-	= objectdata(ID name, Colors colors, Sprite)
+	= objectdata(ID name, Colors colors, Sprite sprite)
 	;
 	
 data Colors
@@ -41,7 +42,7 @@ data Legend
 	= legend(list[LegendData] legend);	
 data LegendData
 	= objectcluster(ID clustername, list[ID] objectnames)
-	| legendobject(Sym symbol, ID objectname);
+	| legendobject(Sym symbol, list[ID] objectnames);
 
 data Layers
 	= layers(list[LayerData] layers);	
@@ -52,39 +53,37 @@ data RuleData
 	= ruledata(list[Rule] rules);
 	
 data Rule
-	= rule(PreCondition precondition, Conditions conditions, Effects effects);
-
-data Effects
-	= effects(list[Effect] effects);
-
-data Effect
-	= modeffect(Mod modifier, ID object)
-	| effect(ID object)
-	| emptyeffect();	
+	= rule(When when, list[Segment] condition, list[Segment] result);
 	
-data Conditions
-	= conditions(list[Condition] conditions);
-	
-data Condition
-	= modcondition(Mod modifier, ID object)
-	| condition(ID object)
-	| emptycondition();
+data Segment
+  = remove()
+  | cell(list[Fill] fill)
+  | until()
+  ;
 	
 data Mod
-	= away()
+	= just()
+	| away()
 	| towords()
 	| up()
 	| down()
 	;
-
-data PreCondition
-	= late()
-	| horizontal()
-	| vertical();
+data Fill
+  = fill(Mod m, ID id)
+  ;
+data When
+  = uncond()
+  | late()
+  | hor()
+  | vert()
+  ;
 	
-
-//public data WinCondition
-//	= wincondition(ID condition);
+data WinCondition
+	= wincondition(str prefix, list[ID] objects)
+	;
 	
-//public data LevelData
-//	= mp(Mp mp);
+data Levels
+	= levels(list[Level] levels);
+	
+data Level
+	= level(str message, Sprite sprite);

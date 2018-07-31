@@ -1,3 +1,61 @@
+title testproject
+author MauroVermeulen
+homepage www.test.com
+
 OBJECTS
+Robotred
+gray black red
+.000.
+.200.
+...0.
+00000
+01010
+
+Robotred
+gray black red
+.000.
+.200.
+...0.
+00000
+01010
 
 LEGEND
+Player = PlayerHead1 or PlayerHead2 or PlayerHead3 or PlayerHead4
+% = thing1 and thing2
+E = GrassyTarget
+
+COLLISIONLAYERS
+Player, Person
+ColdFeet
+Background
+Target
+
+RULES
+[ > Moveable | Moveable ] -> [ > Moveable | > Moveable ]
+[ > Block | Grille ] -> [ Block | Grille ]
+[ > Stuff | ... | moreStuff ] -> [ | ... | Stuff ]
+
+WINCONDITIONS
+All Target on Crate
+
+LEVELS
+message level 1 of 10
+
+......$.
+........
+$......$
+......$$
+........
+........
+#.......
+
+message level 2 of 10
+
+......$.
+........
+$......$
+......$$
+........
+........
+#.......
+
