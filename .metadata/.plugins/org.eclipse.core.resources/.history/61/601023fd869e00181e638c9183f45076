@@ -1,0 +1,66 @@
+title testproject
+author MauroVermeulen
+homepage www.test.com
+
+OBJECTS
+PlayerGround
+black
+.....
+..0..
+.000.
+.000.
+.0.0.
+
+PlayerJump1
+black
+.....
+..0..
+00000
+.000.
+.0.0.
+
+PlayerJump2
+black
+.....
+..0..
+00000
+.000.
+.0.0.
+
+LEGEND
+b = Background
+T = Target
+W = Wall
+C = Crate
+P = PlayerGround
+F = Fruit
+U = UnBrushedSand
+S = Spawner
+M = MirrorPerson
+Player = PlayerGround or PlayerJump1 or PlayerJump2
+Obstacle = Crate or Fruit or Wall or Player or MirrorPerson
+BrushedSand = HBrushedSand or VBrushedSand
+
+SOUNDS
+
+COLLISIONLAYERS
+Background
+Spawner
+Target
+BrushedSand, UnBrushedSand
+Player, Crate, Fruit, Wall, MirrorPerson
+
+RULES
+up [ Up PlayerGround | no Obstacle ] -> [ Up PlayerJump2 | ]
+down [ Up JumpingPlayer | no obstacle ] -> [ JumpingPlayer | ]
+down [ Up PlayerJump2 | no obstacle ] -> [ PlayerJump2 | ]
+
+horizontal [ > PlayerJump1 | no obstacle ] -> [ | PlayerGround ]
+horizontal [ > PlayerJump2 | no obstacle ] -> [ | PlayerJump1 ]
+late down [ PlayerGround | no obstacle ] -> [ | playerground ]
+
+WINCONDITIONS
+All Target on Crate
+
+LEVELS
+

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="LaunchTerminalSettingsDialog">
+		<item value="Compiled Rascal Terminal" key="terminalLabel"/>
+		<section name="SettingsPanelControl">
+			<section name="Compiled Rascal Terminal">
+				<list key="hosts">
+				</list>
+			</section>
+		</section>
+	</section>
+</section>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;salix/src/salix/demo/basic/Celsius.rsc&apos; to &apos;GUI.rsc&apos;" description="Rename resource &apos;Celsius.rsc&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/salix/demo/basic/Celsius.rsc" name="GUI.rsc" stamp="1534194069681" updateReferences="true"/>
+</session>

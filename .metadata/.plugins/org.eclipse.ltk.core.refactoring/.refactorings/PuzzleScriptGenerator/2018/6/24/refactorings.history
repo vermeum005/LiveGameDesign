@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;PuzzleScriptGenerator/src/testStuff.rsc&apos; to &apos;Syntax2.rsc&apos;" description="Rename resource &apos;testStuff.rsc&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/testStuff.rsc" name="Syntax2.rsc" stamp="1528894856676" updateReferences="true"/>
+</session>

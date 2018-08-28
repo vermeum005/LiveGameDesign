@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;salix/src/PuzzleScript/Test/Test2.PS&apos; to &apos;TopDown.PS&apos;" description="Rename resource &apos;Test2.PS&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/PuzzleScript/Test/Test2.PS" name="TopDown.PS" stamp="1534088531362" updateReferences="true"/>
+</session>

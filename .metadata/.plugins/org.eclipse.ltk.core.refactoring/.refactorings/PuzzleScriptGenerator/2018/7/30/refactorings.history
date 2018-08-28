@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move &apos;AST.rsc, Load.rsc, Matching.rsc, Parser.rsc, Serialize.rsc, Syntax.rsc&apos; to &apos;src&apos;" description="Move 6 resources to &apos;src&apos;" destination="src" element1="/salix/src/PuzzleScript/AST.rsc" element2="/salix/src/PuzzleScript/Load.rsc" element3="/salix/src/PuzzleScript/Matching.rsc" element4="/salix/src/PuzzleScript/Parser.rsc" element5="/salix/src/PuzzleScript/Serialize.rsc" element6="/salix/src/PuzzleScript/Syntax.rsc" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="6" stamp="1532703861890" updateReferences="true"/>
+</session>

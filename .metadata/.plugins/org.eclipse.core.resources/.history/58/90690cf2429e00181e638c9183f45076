@@ -1,0 +1,47 @@
+root feature PuzzleScript xor { --TopDown --TwodeePlatformer }
+
+feature TopDown or {--TDOnInput }
+	feature TDOnInput or { --TDPlayerMechanics --TDNPCMechanics --TDGoals}
+		feature TDPlayerMechanics or {--NPCInteraction --TDTransforming --PlayerMovement}	
+			feature NPCInteraction or {--TDPushing --Collect}
+				rule TDPushing {_._. Walking} "[ >  Player | Crate ] -> [  >  Player | > Crate  ]"
+				rule Collect {}"[ > Player | Fruit ] -> [  | Player ]"
+				
+			feature TDTransforming {}
+			feature PlayerMovement or {--TDWalking --TDTrail --Teleport}
+				rule TDWalking {}"late [ crown | water ] -> [ | water ] "
+				feature TDTrail {--TDTrailV --TDTrailH}
+					rule TDTrailV {_._. TDWalking} "vertical [ UnbrushedSand > Player ] -> [ VBrushedSand > Player ]"
+					rule TDTrailH {_._. TDWalking} "horizontal [ UnbrushedSand >  Player  ] -> [ HBrushedSand > Player ]"
+				rule Teleport {}"[ > Player | ... | Fruit ] -> [ | ... | Player ]"
+				
+		feature TDNPCMechanics or {--Appearance --NPCMovement}
+			feature Appearance {--DisappearRowOfThree --Spawn}
+				rule DisappearRowOfThree {}"late [ Crate | Crate | Crate ] -> [ | | ]"
+				rule Spawn {}"[ Spawner no Obstacle ] -> [ Spawner random Robot ]"
+			feature NPCMovement {--Mirroring --Follow --RMovement}
+				rule Mirroring {_._. TDWalking}"[ > Player ][ WifeAttracted ] -> [ > Player ][ > WifeAttracted ]"
+				rule Follow {_._. TDWalking}"[ Eyeball | ... | Player ] -> [ > Eyeball | ... | Player ]"
+				rule RMovement {-.-. TDPushing}"[ stationary Robot ] -> [randomDir Robot]"
+			
+		feature TDGoals xor {--DestroyItems --ItemOnTarget --TDDestination}
+			goal DestroyItems {_._. Disappear}"No fruit"
+			goal ItemOnTarget {}"All Target on Crate"
+			goal TDDestination {}"Some player on endpoint"
+			
+feature TwodeePlatformer or {--RealTime --OnInput}
+	feature OnInput or {--PlayerMechanics --NPCMechanics --Goals}
+		feature PlayerMechanics or {--Movement --Transform --Pushing}
+			feature Movement {--Walking --Trail}
+				rule Walking {}"[ crown | water ] -> [ | water ]"
+				rule Trail {_._. Walking}"[ > Player | NO Obstacle ] -> [ PlayerBodyH  | PlayerHead ]"
+				
+			rule Transform {}"late [ crown | water ] -> [ | water ] "
+			rule Pushing {_._. Walking}"vertical [ >  Player | Crate ] -> [  >  Player | > Crate  ]"
+		feature NPCMechanics or {--Falling --Spawning}
+			rule Falling {}"down[ PlayerGround | NO obstacle ] -> [ | playerground ]"
+			rule Spawning {}"[ Spawner no Obstacle ] -> [ Spawner random Robot ]"
+			
+			
+		feature Goals xor {--Destination}
+			goal Destination {}"Some player on endpoint"
