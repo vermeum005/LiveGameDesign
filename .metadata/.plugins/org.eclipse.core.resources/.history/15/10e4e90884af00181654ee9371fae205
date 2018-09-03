@@ -1,0 +1,830 @@
+@license{
+  Copyright (c) Tijs van der Storm <Centrum Wiskunde & Informatica>.
+  All rights reserved.
+  This file is licensed under the BSD 2-Clause License, which accompanies this project
+  and is available under https://opensource.org/licenses/BSD-2-Clause.
+}
+@contributor{Tijs van der Storm - storm@cwi.nl - CWI}
+
+module salix::demo::basic::GUI
+
+import PuzzleScript::Syntax;
+import PuzzleScript::AST;
+import PuzzleScript::Load;
+import PuzzleScript::Parser;
+import PuzzleScript::Generator;
+import PuzzleScript::Matching;
+import salix::App;
+import salix::HTML;
+import salix::lib::CodeMirror;
+import salix::lib::Mode;
+import String;
+import util::Math;
+import IO;
+import util::Eval;
+import List;
+import AST;
+import Syntax;
+import PuzzleScript::Serialize;
+
+
+alias Model = tuple[str mtype, str WinCondition, Mode mode, str cmText, list[Feature] chosenOnes, list[Feature] genreList, list[Feature] winConditionList, str genre];
+
+Model init() = <"Options", "", grammar2mode("PuzzleScript", #PSProgram), "", [], [], [], "">;
+
+App[Model] celsiusApp() = 
+  app(init, view, update, |http://localhost:9193/salix/demo/basic/index.html|, |project://salix/src|); 
+
+data Msg
+  =  TDPushing()
+  |  Collect()
+  |	 TDWalking()
+  |	 TDTrailV()
+  |  TDTrailH()
+  |  Teleport()
+  |	 TDTransforming()
+  |	 Disappear()
+  |  Spawn()
+  |  Mirroring()
+  |  Follow()
+  |  RMovement()
+  |  DestroyItems()
+  |  ItemOnTarget()
+  |  TDDestination()
+  |  Fill()
+  |  Walking()
+  |  Trail()
+  |  Transform()
+  |  Pushing()
+  |  Falling()
+  |  Spawning()
+  |  NPCTransform()
+  |  Destination()
+  |  Next()
+  |  Back()
+  |  Generate()
+  |	 TopDown()
+  |  TwoDee()
+  |  CreateGame()
+  |  AnalyseGame()
+  |  Background()
+  |  Target()
+  |  Wall()
+  |  Crate()
+  |  Player()
+  |  Fruit()
+  |  HBrushedSand()
+  |  VBrushedSand()
+  |  UnBrushedSand()
+  ;
+  
+  
+Model update(TDPushing(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "TDPushing")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(Collect(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Collect")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(TDWalking(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "TDWalking")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(TDTrailV(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "TDTrailV")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(TDTrailH(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "TDTrailH")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(Teleport(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Teleport")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(TDTransforming(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "TDTransforming")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(Disappear(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Disappear")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(Spawn(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Spawn")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(Mirroring(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Mirroring")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(Follow(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Follow")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(RMovement(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "RMovement")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(DestroyItems(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "DestroyItems")
+		{
+			if (goal(ID id, list[ExtraEdge] extraEdges, str goal):= f)
+			{
+				model.WinCondition = "<f.goal>";
+			}
+		}	
+	}
+	return model;
+}
+Model update(ItemOnTarget(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "ItemOnTarget")
+		{
+			if (goal(ID id, list[ExtraEdge] extraEdges, str goal):= f)
+			{
+				model.WinCondition = "<f.goal>";
+			}
+		}	
+	}
+	return model;
+}
+Model update(TDDestination(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "TDDestination")
+		{
+			if (goal(ID id, list[ExtraEdge] extraEdges, str goal):= f)
+			{
+				model.WinCondition = "<f.goal>";
+			}
+		}	
+	}
+	return model;
+}
+Model update(Fill(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Fill")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(Walking(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Walking")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(Trail(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Trail")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(Transform(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Transform")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(Pushing(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Pushing")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(Falling(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Falling")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(Spawning(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Spawning")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(NPCTransform(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "NPCTransform")
+		{
+			int i = indexOf(model.chosenOnes, f);
+			if (i != -1)
+			{
+				model.chosenOnes = delete(model.chosenOnes, i);
+			}
+			else
+			{
+				model.chosenOnes += [f];
+			}
+		}	
+	}
+	return model;
+}
+Model update(Destination(), Model model)
+{
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Destination")
+		{
+			if (goal(ID id, list[ExtraEdge] extraEdges, str goal):= f)
+			{
+				model.WinCondition = "<f.goal>";
+			}
+		}	
+	}
+	return model;
+}
+Model update(Msg msg, Model model) {	
+	switch (msg) {
+		case Next(): if (model.mtype == "Selection") model.mtype = "Rules"; else if (model.mtype == "Rules") model.mtype = "Goals"; else if (model.mtype == "Goals")  model.mtype = "RuleSp";
+		case Back(): if (model.mtype == "RuleSp") model.mtype = "Goals"; else if (model.mtype == "Goals") model.mtype = "Rules"; else if (model.mtype == "Rules") model.mtype = "Selection"; else  model.mtype = "Selection";
+	}
+  	return model;
+}
+Model update(Generate(), Model model)
+{
+	generate(model.chosenOnes, model.WinCondition, model.genre);
+	return model;
+}
+Model update(TopDown(), Model model)
+{
+	model.winConditionList = [];
+	model.WinCondition = "";
+	model.chosenOnes = [];
+	model.genreList = [];
+	model.genre = "TopDown";
+	
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "TDPushing") model.genreList += [f];
+		else if (f.id.name == "Collect") model.genreList += [f];
+		else if (f.id.name == "TDWalking") model.genreList += [f];
+		else if (f.id.name == "TDTrailV") model.genreList += [f];
+		else if (f.id.name == "TDTrailH") model.genreList += [f];
+		else if (f.id.name == "Teleport") model.genreList += [f];
+		else if (f.id.name == "Disappear") model.genreList += [f];
+		else if (f.id.name == "Spawn") model.genreList += [f];
+		else if (f.id.name == "Mirroring") model.genreList += [f];
+		else if (f.id.name == "Follow") model.genreList += [f];
+		else if (f.id.name == "RMovement") model.genreList += [f];
+		else if (f.id.name == "DestroyItems") model.winConditionList += [f];
+		else if (f.id.name == "ItemOnTarget") model.winConditionList += [f];
+		else if (f.id.name == "TDDestination") model.winConditionList += [f];
+	}
+	model.mtype = "Rules";
+	return model;
+}
+Model update(TwoDee(), Model model)
+{
+	model.winConditionList = [];
+	model.WinCondition = "";
+	model.chosenOnes = [];
+	model.genreList = [];
+	model.genre = "TwoDee";
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "Walking") model.genreList += [f];
+		else if (f.id.name == "Trail") model.genreList += [f];
+		else if (f.id.name == "Transform") model.genreList += [f];
+		else if (f.id.name == "Pushing") model.genreList += [f];
+		else if (f.id.name == "Falling") model.genreList += [f];
+		else if (f.id.name == "Spawning") model.genreList += [f];
+		else if (f.id.name == "Destination") model.winConditionList += [f];
+	}
+	model.mtype = "Rules";
+	return model;
+}
+Model update(CreateGame(), Model model)
+{
+	model.mtype = "Selection";
+	return model;
+}
+Model update(AnalyseGame(), Model model)
+{
+	g = FM_implode(FM_parse());
+	for (Feature r <- g.features)
+	{
+		if (rule(ID id, list[ExtraEdge] extraEdges, Rule rule) := r)
+		{
+			c = match(g,r.rule);
+			//if (c)
+			//{
+			//	iprintln(r.id.name);
+			//}
+			;
+		}
+	}
+	for(Feature f <- FM_implode(FM_parse()).features)
+	{
+		if (f.id.name == "TDPushing") model.genreList += [f];
+		else if (f.id.name == "Collect") model.genreList += [f];
+		else if (f.id.name == "TDWalking") model.genreList += [f];
+		else if (f.id.name == "TDTrailV") model.genreList += [f];
+		else if (f.id.name == "TDTrailH") model.genreList += [f];
+		else if (f.id.name == "Teleport") model.genreList += [f];
+		else if (f.id.name == "Disappear") model.genreList += [f];
+		else if (f.id.name == "Spawn") model.genreList += [f];
+		else if (f.id.name == "Mirroring") model.genreList += [f];
+		else if (f.id.name == "Follow") model.genreList += [f];
+		else if (f.id.name == "RMovement") model.genreList += [f];
+		else if (f.id.name == "DestroyItems") model.winConditionList += [f];
+		else if (f.id.name == "ItemOnTarget") model.winConditionList += [f];
+		else if (f.id.name == "TDDestination") model.winConditionList += [f];
+	}
+	model.mtype = "Rules";
+	return model;
+}
+
+Model update(Background(), Model model)
+{
+	
+	return model;
+}
+Model update(Target(), Model model)
+{
+	
+	return model;
+}
+Model update(Wall(), Model model)
+{
+	
+	return model;
+}
+Model update(Crate(), Model model)
+{
+	return model;
+}
+Model update(Player(), Model model)
+{
+	
+	return model;
+}
+Model update(Fruit(), Model model)
+{
+	
+	return model;
+}
+Model update(HBrushedSand(), Model model)
+{
+	
+	return model;
+}
+Model update(VBrushedSand(), Model model)
+{
+	
+	return model;
+}
+Model update(UnBrushedSand(), Model model)
+{
+	
+	return model;
+}
+
+map[ID, Feature] featureMap(FeatureModel m)
+  = (f.id: f | Feature f <- m.features);
+
+void view(Model m) { 
+	str temp = "";
+	for(Feature f <- m.chosenOnes)
+	{
+		temp += "<f.id.name>\n";
+	}	
+	temp += "<m.WinCondition>\n";
+	for(Feature f <- m.chosenOnes)
+	{
+		for (ExtraEdge e <- f.extraEdges)
+		{
+			if (requires(ID target) := e)
+			{
+				temp += "<f.id.name> requires <e.target.name>\n";
+			}
+			if (excludes(ID target) := e)
+			{
+				temp += "<f.id.name> excludes <e.target.name>\n";
+			}
+		}
+	}
+	m.cmText = temp;
+	if (m.mtype == "Options")
+	{
+		div(()
+    	{
+    		h1("Do you want to Generate a new game or alter an existing one?");
+    		button(onClick(CreateGame()), "Generate");
+			button(onClick(AnalyseGame()), "Transform");
+    	});
+	}
+	if (m.mtype == "Selection")
+	{
+		div(()
+    	{
+    		h1("Genre Selection");
+    		for(Feature f <- FM_implode(FM_parse()).features)
+    		{
+    			if(feature(bool isRoot, ID id, Mod modifier, list[Edge] edges, list[ExtraEdge] extraEdges):= f)
+    			{
+    				if(f.id.name == "TopDown")
+    				{
+    					button(onClick(TopDown()), "TopDown");
+					}
+					else if(f.id.name == "TwodeePlatformer")
+					{
+						button(onClick(TwoDee()), "2DPlatformer");
+					}    			
+    			}
+    		}
+    	});
+	}
+	if (m.mtype == "Rules") 
+  	{
+		div(() {
+    		h2("Mechanic Selection");
+    		for(Feature f <- m.genreList)
+    		{
+    			if (rule(ID id, list[ExtraEdge] extraEdges, Rule rule) := f)
+    			{
+    				str datum = id.name;
+    				Msg dtum;
+    				if(result(dtum) := eval("import salix::demo::basic::GUI; <datum>();"))
+    				{
+    		  			button(onClick(dtum), id.name);
+    				}
+    			}
+    		}
+    		if (m.genre == "TwoDee")
+    		{
+    			h3("Jumping and Falling is asumed to be a requirement for 2DPlatformers");
+    		}
+    		h3("Chosen Mechanics");
+    		codeMirrorWithMode("cm", m.mode, style(("height": "auto")), lineNumbers(true), \value(m.cmText), readOnly(true));
+    		button(onClick(Back()), "Back");
+    		button(onClick(Next()), "Next");
+    	});
+    }
+    if (m.mtype == "Goals")
+    {
+    	div(()
+    	{
+    		h2("WinCondition Selection");
+    		for(Feature f <- m.winConditionList)
+    		{
+    			if (goal(ID id, list[ExtraEdge] extraEdges, str goal) := f);
+    			{
+    				str datum = f.id.name;
+    				Msg dtum;
+    				if(result(dtum) := eval("import salix::demo::basic::GUI; <datum>();"))
+    				{
+    		  			button(onClick(dtum), datum);
+    				}
+    			}
+    		}
+    		h3("Chosen Mechanics and WinCondition");
+    		codeMirrorWithMode("cm", m.mode, style(("height": "auto")), lineNumbers(true), \value(m.cmText), readOnly(true));
+    		button(onClick(Back()), "Back");
+    		button(onClick(Generate()), "Generate");
+    	});
+    	div(()
+    	{
+    	h1("Goals");
+    	button(onClick(Back()), "Back");
+    	button(onClick(Next()), "Next");
+    	});
+    }
+    if (m.mtype == "RuleSp")
+    {
+   
+    str temp = "";
+    div(()
+    {
+    	Program q = PS_implode(load1());
+    	for (Feature f <- m.chosenOnes)
+    	{
+    		div(()
+    		{
+    			switch (f.id.name)
+    			{
+    				case "TDPushing":
+    				{
+    					h1("Pushing");
+    					for(ObjectData t <- q.objects.objects)
+    					{
+    						str datum = "<t.name.name>";
+    						Msg dtum;
+    						if(result(dtum) := eval("import salix::demo::basic::GUI; <datum>();"))
+    						{
+    		  					button(onClick(dtum), t.name.name);
+    						}
+    					}
+    				}
+    				
+    				case "Collect": ;
+    				case "TDTrailV": ;
+    				case "TDTrailH": ;
+    				case "Teleport": ;
+    				case "DisappearRow": ;
+    				case "Spawn": ;
+    				case "Mirroring": ;
+    				case "Follow": ;
+    				case "RMovement": ;
+    				case "DestroyItems": ;
+    				case "ItemOnTarget": ;
+    				case "TDDestination": ;
+    				case "Trail": ;
+    				case "Transform": ;
+    				case "Pushing": ;
+    				case "Falling": ;
+    				case "Spawning": ;
+    				case "Destination": ;
+    			}
+    			h1("");
+    		});
+    	};
+    	codeMirrorWithMode("cm", m.mode, style(("height": "auto")), lineNumbers(true), \value(m.cmText), readOnly(true));
+    	button(onClick(Back()), "Back");
+    	button(onClick(Generate()), "Generate");
+    });
+    }
+}
+
+
