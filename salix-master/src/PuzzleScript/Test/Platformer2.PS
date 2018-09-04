@@ -1,0 +1,142 @@
+title testproject 
+author MauroVermeulen 
+homepage www.test.com
+
+OBJECTS
+Background
+brown green  
+11111
+01111
+11101
+11111
+10111
+
+Target
+blue  
+.....
+.000.
+.0.0.
+.000.
+.....
+
+Wall
+brown black  
+00010
+11111
+01000
+11111
+00010
+
+Crate
+orange yellow  
+00000
+0...0
+0...0
+0...0
+00000
+
+PlayerGround
+black
+.....
+..0..
+.000.
+.000.
+.0.0.
+
+PlayerJump1
+black
+.....
+..0..
+00000
+.000.
+.0.0.
+
+PlayerJump2
+black
+.....
+..0..
+00000
+.000.
+.0.0.
+
+MirrorPerson
+black orange green blue  
+.000.
+.111.
+22222
+.333.
+.3.3.
+
+Fruit
+red green  
+..1..
+.000.
+00000
+00000
+.000.
+
+HBrushedSand
+yellow orange  
+00000
+01011
+00000
+11010
+00000
+
+VBrushedSand
+yellow orange  
+01000
+01010
+00000
+01010
+00010
+
+UnBrushedSand
+yellow orange  
+00000
+01000
+00000
+00010
+00000
+
+Spawner
+yellow
+.....
+..0..
+.000.
+..0..
+.....
+
+LEGEND 
+b = Background
+T = Target
+W = Wall
+C = Crate
+P = PlayerGround
+F = Fruit
+U = UnBrushedSand
+S = Spawner
+M = MirrorPerson
+BrushedSand = HBrushedSand or VBrushedSand
+Player = PlayerGround or PlayerJump1 or PlayerJump2
+Obstacle = Crate or Fruit or Wall or Player or MirrorPerson
+
+SOUNDS
+
+COLLISIONLAYERS
+Background
+Spawner
+Target
+BrushedSand
+Player, Crate, Fruit, Wall, MirrorPerson, UnBrushedSand
+
+RULES
+[  >  Player |  Crate] ->[  >  Player |  >  Crate]
+[  >  Player |  Fruit] ->[  |  Player]
+horizontal[  UnbrushedSand >  Player] ->[  HBrushedSand >  Player]
+vertical[  UnbrushedSand >  Player] ->[  VBrushedSand >  Player]
+
+WINCONDITIONS
+All Target on Crate
+
+LEVELS
