@@ -1,0 +1,97 @@
+title ZenuzzleGarden
+author lexaloffle
+homepage www.lexaloffle.com
+
+
+OBJECTS
+
+
+Background
+orange brown
+00100
+00000
+00010
+10000
+00000
+
+Player
+black
+.0.0.
+01010
+00000
+.000.
+11.11
+
+Rock
+yellow
+21002
+11000
+11000
+11000
+11101
+
+
+UnbrushedSand
+yellow orange
+00000
+01000
+00000
+00010
+00000
+
+HBrushedSand
+yellow orange
+00000
+01011
+00000
+11010
+00000
+
+VBrushedSand
+yellow orange
+01000
+01010
+00000
+01010
+00010
+
+
+LEGEND
+
+
+BrushedSand = HBrushedSand or VBrushedSand
+Obstacle = BrushedSand or Rock
+Q = Background
+O = Rock
+. = UnbrushedSand
+P = Player
+
+SOUNDS
+
+
+COLLISIONLAYERS
+
+
+Background
+Sandl
+Player, Rock
+
+
+RULES
+
+
+
+
+horizontal [ UnbrushedSand >  Player  ] -> [ HBrushedSand > Player ]
+vertical [ UnbrushedSand > Player ] -> [ VBrushedSand > Player ]
+
+
+
+
+WINCONDITIONS
+
+No UnbrushedSand
+
+
+LEVELS
+
